@@ -18,6 +18,14 @@
             "outFiles": [
                 "${workspaceFolder}/tscOutDir/**/*.js"
             ]
+        },
+        {
+            "type": "node-terminal",
+            "name": "Run Script: miniflare",
+            "request": "launch",
+            "command": "npm run miniflare",
+            "cwd": "${workspaceFolder}",
+            "trace": true
         }
     ]
 }

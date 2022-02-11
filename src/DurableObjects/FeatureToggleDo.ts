@@ -14,8 +14,8 @@ export class FeatureToggleDo {
     let toggle: FeatureToggle | undefined = undefined;
     if (request.method === 'POST') {
       toggle = await this.state.storage?.get(togglePath) ?? {value: false};
-      
-      await this.state.storage?.put(togglePath, !toggle.value)
+      toggle.value = !toggle.value;
+      await this.state.storage?.put(togglePath, toggle);
     }
 
     // Durable Object storage is automatically cached in-memory, so reading the
