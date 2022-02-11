@@ -16,8 +16,8 @@ main = "./index.mjs"
 
 [durable_objects]
 bindings = [
-    {name = "COUNTER", class_name = "CounterTs"},
-    {name = "FeatureToggle", class_name = "FeatureToggle"}
+    {name = "CustomerDo", class_name = "CustomerDo"},
+    {name = "FeatureToggleDo", class_name = "FeatureToggleDo"}
 ]
 
 [[migrations]]

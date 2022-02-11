@@ -1,0 +1,3 @@
+interface FeatureToggle {
+    value: boolean;
+}

@@ -1,9 +1,7 @@
-import isOdd from 'is-odd'
-
 // In order for the workers runtime to find the class that implements
 // our Durable Object namespace, we must export it from the root module.
-export { CounterTs } from './counter'
-export { FeatureToggle } from './FeatureToggle'
+export { FeatureToggleDo } from './DurableObjects/FeatureToggleDo';
+export { CustomerDo } from './DurableObjects/CustomerDo';
 
 export default {
   async fetch(request: Request, env: Env) {
@@ -22,8 +20,8 @@ async function handleRequest(request: Request, env: Env) {
       "status": 404
     });
   }
-  let id = env.FeatureToggle.idFromName(toggleName)
-  let obj = env.FeatureToggle.get(id)
+  let id = env.FeatureToggleDo.idFromName(toggleName)
+  let obj = env.FeatureToggleDo.get(id)
   let resp = await obj.fetch(request)
   let resText: string = await resp.text();
 
@@ -31,6 +29,6 @@ async function handleRequest(request: Request, env: Env) {
 }
 
 interface Env {
-  COUNTER: DurableObjectNamespace,
-  FeatureToggle: DurableObjectNamespace
+  CustomerDo: DurableObjectNamespace,
+  FeatureToggleDo: DurableObjectNamespace
 }
