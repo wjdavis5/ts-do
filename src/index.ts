@@ -14,14 +14,22 @@ export default {
 }
 
 async function handleRequest(request: Request, env: Env) {
-  let toggleName = (new URL(request.url)).pathname;
-  if(!toggleName || toggleName === '' || toggleName === '/'){
+  let path = (new URL(request.url)).pathname.slice(1);
+  if (request.url.endsWith('/'))
+    return new Response("Trailing slash is not allowed", {status: 400});
+  console.debug("url:", request.url);
+  console.debug("path:", path);
+  if(!path || path === '' || path === '/'){
     return new Response(null,{
       "status": 404
     });
   }
-  let id = env.FeatureToggleDo.idFromName(toggleName)
+  let customer = path.split('/')[0];
+  console.debug("customer:", customer);
+  let id = env.FeatureToggleDo.idFromName(customer);  
+  console.debug("do id:", id);
   let obj = env.FeatureToggleDo.get(id)
+  console.debug("do obj:", obj);
   let resp = await obj.fetch(request)
   let resText: string = await resp.text();
 

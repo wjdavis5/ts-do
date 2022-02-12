@@ -22,4 +22,4 @@ bindings = [
 
 [[migrations]]
 tag = "v1" # Should be unique for each entry
-new_classes = ["CounterTs"]
+new_classes = ["FeatureToggleDo", "CustomerDo"]
