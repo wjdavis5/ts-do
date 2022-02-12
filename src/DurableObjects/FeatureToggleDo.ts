@@ -9,18 +9,27 @@ export class FeatureToggleDo {
   // Handle HTTP requests from clients.
   async fetch(request: Request) {
     // Apply requested action.
-    let url = new URL(request.url)
-    let togglePath = url.pathname
-    let toggle: FeatureToggle | undefined = undefined;
+    let url = new URL(request.url);
+    let togglePath = url.pathname;
+    let paths = togglePath.split('/');
+    let cutsomerId = `/${paths[1]}`;
+    console.debug(cutsomerId);
+
+    let toggle: FeatureToggle | undefined = undefined
     if (request.method === 'POST') {
-      toggle = await this.state.storage?.get(togglePath) ?? {value: false};
-      toggle.value = !toggle.value;
-      await this.state.storage?.put(togglePath, toggle);
+      toggle = (await this.state.storage?.get(togglePath)) ?? { value: false }
+      toggle.value = !toggle.value
+      await this.state.storage?.put(togglePath, toggle)
+    }
+    if (request.method === 'GET' && paths.length === 2) {
+      const allKeys = await this.state.storage?.list();
+      console.debug(JSON.stringify(allKeys));
+      const allCutsomerKeys = await this.state.storage?.list({
+        prefix: cutsomerId,
+      })
+      return new Response(JSON.stringify(allCutsomerKeys), { status: 200 })
     }
 
-    // Durable Object storage is automatically cached in-memory, so reading the
-    // same key every request is fast. (That said, you could also store the
-    // value in a class member if you prefer.)
     toggle = await this.state.storage?.get(togglePath)
     if (toggle === undefined) return new Response('Not found', { status: 404 })
 
@@ -29,7 +38,7 @@ export class FeatureToggleDo {
     // unwanted concurrency. So, read-modify-write is safe. For more details,
     // see: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
 
-    return new Response(JSON.stringify(toggle));
+    return new Response(JSON.stringify(toggle))
   }
 }
 
