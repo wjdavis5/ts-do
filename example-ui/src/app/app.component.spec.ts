@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-material-auth-ui'`, () => {
+  it(`should have as title 'ffio-example-ui'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-material-auth-ui');
+    expect(app.title).toEqual('ffio-example-ui');
   });
 
   it('should render title', () => {

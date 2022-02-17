@@ -46,12 +46,21 @@ body {
   color: #ffffff;
 }
 
+.customer-search{
+  margin: 100px;
+}
+
 .box {
   position: relative;
   top: 0;
   opacity: 1;
   float: left;
-  padding: 60px 50px 40px 50px;
+  text-align: center;
+  align-content: center;
+  child-align: middle;
+  padding: 10px !important;
+  margin-top: 55px;
+  margin-bottom: 0px !important;
   width: 100%;
   background: #fff;
   border-radius: 10px;
@@ -60,6 +69,9 @@ body {
   -ms-transform: scale(1);
   z-index: 5;
   max-width: 330px;
+}
+.box button {
+  margin-top: 15px;
 }
 
 .box.back {
@@ -71,20 +83,7 @@ body {
   z-index: -1;
 }
 
-.box:before {
-  content: "";
-  width: 100%;
-  height: 30px;
-  border-radius: 10px;
-  position: absolute;
-  top: -10px;
-  background: rgba(255, 255, 255, .6);
-  left: 0;
-  transform: scale(.95);
-  -webkit-transform: scale(.95);
-  -ms-transform: scale(.95);
-  z-index: -1;
-}
+
 
 .main-wrapper .example-form {
   min-width: 100%;
@@ -93,7 +92,7 @@ body {
 }
 
 .main-wrapper .example-full-width,
-.main-wrapper .btn-block {
+.main-wrapper  {
   width: 100%;
 }
 
@@ -109,10 +108,6 @@ body {
   margin: 0;
 }
 
-.main-wrapper .mat-card {
-  padding: 45px 70px 55px;
-}
-
 .main-wrapper .mat-stroked-button {
   border: 1px solid currentColor;
   line-height: 54px;
@@ -120,7 +115,6 @@ body {
 }
 
 .main-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0.8375em 0;
 }
 table {
   width: 100%;
