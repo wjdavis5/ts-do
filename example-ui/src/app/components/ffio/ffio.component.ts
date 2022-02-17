@@ -18,6 +18,7 @@ export class FfioComponent implements OnInit,AfterViewInit  {
   @ViewChild(MatTable) table: MatTable<Feature>;
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  loading: boolean = false;
   features: Array<Feature> = new Array<Feature>();
   dataSource = new MatTableDataSource<Feature>(this.features);
   displayedColumns: string[] = ['name', 'value', 'toggle'];
@@ -41,6 +42,7 @@ export class FfioComponent implements OnInit,AfterViewInit  {
   }
 
   GetFeatures(customer: string): void {
+    this.loading = true;
     this.logService.AppendLog(`Getting features for customer: ${customer}`);
     this.features.splice(0,this.features.length);
     this.ffioService.GetFeatures(customer).
@@ -52,15 +54,18 @@ export class FfioComponent implements OnInit,AfterViewInit  {
       .subscribe(value => {
         this.features.push(... value);
         this.dataSource.paginator = this.paginator;
+        this.loading = false;
       });
   }
   ToggleFeature(feature:Feature){
+    this.loading = true;
     this.logService.AppendLog(`Toggling Feature: ${JSON.stringify(feature)}`);
     this.ffioService.ToggleFeature(feature).pipe(
       tap(value => this.logService.AppendLog(`\t=>${JSON.stringify(value)}`))
     ).subscribe(feature => {
       const index = this.features.findIndex(value => value.name === feature.name);
       this.features[index].value = feature.value;
+      this.loading = false;
     })
 
   }
