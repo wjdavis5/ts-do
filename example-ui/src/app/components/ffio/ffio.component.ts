@@ -66,7 +66,11 @@ export class FfioComponent implements OnInit,AfterViewInit  {
       const index = this.features.findIndex(value => value.name === feature.name);
       this.features[index].value = feature.value;
       this.loading = false;
-    })
+    },
+      err => {
+        this.loading = false;
+        this.logService.AppendLog(JSON.stringify(err))
+      })
 
   }
 }
