@@ -33,6 +33,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           cd example-ui
+          npm i -g @angular/cli
           npm ci && ng build
       
       - name: Upload a Build Artifact
