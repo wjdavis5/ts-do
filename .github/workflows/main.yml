@@ -44,3 +44,10 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           path: ./example-ui/dist/ffio-example-ui
           
+      - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+        with:
+          source_dir: ./example-ui/dist/ffio-example-ui
+          container_name: $web
+          connection_string: ${{ secrets.ConnectionString }}
+          sync: true
+          
