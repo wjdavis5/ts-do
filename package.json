@@ -31,6 +31,8 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "cors": "^2.8.5",
     "is-even": "^1.0.0"
   }
 }

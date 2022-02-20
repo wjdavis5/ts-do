@@ -20,6 +20,19 @@ const corsHeaders: any = {
   'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
   'Access-Control-Max-Age': '86400',
 }
+const issuer: string = 'https://dev-4699488.okta.com/oauth2/default'
+const expectedAudience: string = "api://default"
+
+function parseJwt (token: string){
+  var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
 function handleOptions(request: Request) {
   // Make sure the necessary headers are present
   // for this to be a valid pre-flight request
@@ -54,16 +67,34 @@ function handleOptions(request: Request) {
   }
 }
 
+ function verifyAuth(accessToken: string, audience: string): boolean{
+  let jwt = parseJwt(accessToken);
+  console.log(jwt);
+  var expDate = new Date(jwt.exp * 1000);
+  var now = new Date();
+  if(jwt.aud !== audience || jwt.iss !== issuer || now > expDate)
+  {
+    return false
+  }
+  return true;
+}
+
 async function handleRequest(request: Request, env: Env) {
   let path = new URL(request.url).pathname.slice(1)
   let response: Response
-
+  let authHeader = request.headers.get('Authorization');
+  console.log(authHeader);
   switch (request.method) {
     case 'OPTIONS': {
       response = handleOptions(request);
       break;
     }
     default: {
+      if (!authHeader || !(verifyAuth(authHeader.split(' ')[1],expectedAudience))) {
+        response = new Response('Unauthorized', {status: 401})
+        break;
+      }
+      
       if (request.url.endsWith('/')) {
         response = new Response('Trailing slash is not allowed', {
           status: 400,

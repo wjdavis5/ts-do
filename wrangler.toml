@@ -23,3 +23,11 @@ bindings = [
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["FeatureToggleDo", "CustomerDo"]
+
+[[migrations]]
+tag = "v2" # Should be unique for each entry
+deleted_classes = ["FeatureToggleDo", "CustomerDo"]
+
+[[migrations]]
+tag = "v3" # Should be unique for each entry
+new_classes = ["FeatureToggleDo", "CustomerDo"]

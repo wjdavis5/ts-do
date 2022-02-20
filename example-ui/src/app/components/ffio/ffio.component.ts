@@ -55,7 +55,11 @@ export class FfioComponent implements OnInit,AfterViewInit  {
         this.features.push(... value);
         this.dataSource.paginator = this.paginator;
         this.loading = false;
-      });
+      },
+        err => {
+          this.loading = false;
+          this.logService.AppendLog(JSON.stringify(err))
+        });
   }
   ToggleFeature(feature:Feature){
     this.loading = true;
