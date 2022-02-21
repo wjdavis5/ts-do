@@ -10,6 +10,9 @@ export const environment = {
     redirectUri: 'http://localhost:4200/login/callback',
     scopes: ['openid', 'profile', 'email'],
     pkce: true
+  },
+  ffioConfig: {
+    baseUrl: "http://127.0.0.1:8787"
   }
 };
 

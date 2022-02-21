@@ -19,6 +19,7 @@ import {
 import { OktaAuth } from '@okta/okta-auth-js';
 import {environment} from "../environments/environment";
 import { SignInButtonComponent } from './components/sign-in-button/sign-in-button.component';
+import {FFIO_CONFIG} from "./models/ffio-config";
 
 const oktaAuth = new OktaAuth({
   clientId: environment.oktaConfig.clientId,
@@ -27,6 +28,8 @@ const oktaAuth = new OktaAuth({
   scopes: environment.oktaConfig.scopes,
   pkce: true
 });
+let ffioConfig = environment.production;
+
 @NgModule({
   declarations: [
     AppComponent,
